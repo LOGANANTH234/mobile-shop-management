@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MobileSync Pro — Mobile Shop Management System</title>
+  <meta name="description" content="Complete offline mobile shop management system for inventory, billing, sales, purchases, and reporting.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- Toast Notifications Container -->
+<div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="false"></div>
+
+<!-- Sidebar -->
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">
+      <div class="logo-icon">📱</div>
+      <div class="logo-text">
+        <span class="logo-title">MobileSync</span>
+        <span class="logo-sub">Pro Edition</span>
+      </div>
+    </div>
+    <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar" title="Toggle sidebar">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <nav class="sidebar-nav" aria-label="Main navigation">
+    <div class="nav-section-label">Main Menu</div>
+    <ul class="nav-list">
+      <li><a href="#" class="nav-item active" data-page="dashboard" aria-current="page">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Dashboard</span>
+      </a></li>
+      <li><a href="#" class="nav-item" data-page="inventory">
+        <span class="nav-icon">📦</span>
+        <span class="nav-label">Inventory</span>
+      </a></li>
+      <li><a href="#" class="nav-item" data-page="purchases">
+        <span class="nav-icon">🛒</span>
+        <span class="nav-label">Purchases</span>
+      </a></li>
+      <li><a href="#" class="nav-item" data-page="sales">
+        <span class="nav-icon">🧾</span>
+        <span class="nav-label">Sales / Billing</span>
+        <span class="nav-badge">POS</span>
+      </a></li>
+    </ul>
+    <div class="nav-section-label">Management</div>
+    <ul class="nav-list">
+      <li><a href="#" class="nav-item" data-page="customers">
+        <span class="nav-icon">👥</span>
+        <span class="nav-label">Customers</span>
+      </a></li>
+      <li><a href="#" class="nav-item" data-page="suppliers">
+        <span class="nav-icon">🏭</span>
+        <span class="nav-label">Suppliers</span>
+      </a></li>
+      <li><a href="#" class="nav-item" data-page="expenses">
+        <span class="nav-icon">💸</span>
+        <span class="nav-label">Expenses</span>
+      </a></li>
+    </ul>
+    <div class="nav-section-label">Analytics</div>
+    <ul class="nav-list">
+      <li><a href="#" class="nav-item" data-page="reports">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">Reports</span>
+      </a></li>
+      <li><a href="#" class="nav-item" data-page="settings">
+        <span class="nav-icon">⚙️</span>
+        <span class="nav-label">Settings</span>
+      </a></li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="shop-info">
+      <div class="shop-avatar">SS</div>
+      <div class="shop-details">
+        <span class="shop-name">Star Sales</span>
+        <span class="shop-status">● Online</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<main id="main-content" class="main-content">
+
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <h1 id="page-title" class="page-title">Dashboard</h1>
+      <span id="page-breadcrumb" class="breadcrumb">Home / Dashboard</span>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-date">
+        <span id="current-date">Thu, 01 Oct 2026</span>
+        <span id="current-time">11:49 PM</span>
+      </div>
+      <button class="theme-toggle" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">
+        <div class="theme-toggle-track">
+          <div class="theme-toggle-thumb" id="theme-thumb">🌙</div>
+        </div>
+        <span class="theme-toggle-label" id="theme-label">Dark</span>
+      </button>
+      <button class="btn-icon" title="Notifications" aria-label="Notifications">
+        🔔 <span class="notification-dot"></span>
+      </button>
+      <button class="btn-icon" title="Help" aria-label="Help">❓</button>
+    </div>
+
+  </header>
+
+  <!-- Page Sections -->
+  <div class="page-content">
+
+    <!-- ===================== DASHBOARD ===================== -->
+    <section id="page-dashboard" class="page active" aria-labelledby="dashboard-heading">
+      <h2 id="dashboard-heading" class="sr-only">Dashboard Overview</h2>
+
+      <!-- Stats Cards Row -->
+      <div class="stats-grid">
+        <div class="stat-card accent-green">
+          <div class="stat-icon">💰</div>
+          <div class="stat-body">
+            <div class="stat-label">Today's Sales</div>
+            <div class="stat-value">₹48,250</div>
+            <div class="stat-change positive">↑ 12% from yesterday</div>
+          </div>
+        </div>
+        <div class="stat-card accent-blue">
+          <div class="stat-icon">🛒</div>
+          <div class="stat-body">
+            <div class="stat-label">Today's Purchases</div>
+            <div class="stat-value">₹32,000</div>
+            <div class="stat-change positive">↑ 5% from yesterday</div>
+          </div>
+        </div>
+        <div class="stat-card accent-purple">
+          <div class="stat-icon">📈</div>
+          <div class="stat-body">
+            <div class="stat-label">Today's Profit</div>
+            <div class="stat-value">₹16,250</div>
+            <div class="stat-change positive">↑ 8% from yesterday</div>
+          </div>
+        </div>
+        <div class="stat-card accent-orange">
+          <div class="stat-icon">📦</div>
+          <div class="stat-body">
+            <div class="stat-label">Total Stock Items</div>
+            <div class="stat-value">1,284</div>
+            <div class="stat-change neutral">48 items added today</div>
+          </div>
+        </div>
+        <div class="stat-card accent-teal">
+          <div class="stat-icon">💎</div>
+          <div class="stat-body">
+            <div class="stat-label">Total Stock Value</div>
+            <div class="stat-value">₹18.4L</div>
+            <div class="stat-change neutral">Updated now</div>
+          </div>
+        </div>
+        <div class="stat-card accent-red">
+          <div class="stat-icon">⚠️</div>
+          <div class="stat-body">
+            <div class="stat-label">Low Stock Items</div>
+            <div class="stat-value">23</div>
+            <div class="stat-change negative">↑ 4 since last week</div>
+          </div>
+        </div>
+        <div class="stat-card accent-yellow">
+          <div class="stat-icon">👤</div>
+          <div class="stat-body">
+            <div class="stat-label">Pending Customer Pay</div>
+            <div class="stat-value">₹1,24,500</div>
+            <div class="stat-change negative">7 customers pending</div>
+          </div>
+        </div>
+        <div class="stat-card accent-indigo">
+          <div class="stat-icon">🏭</div>
+          <div class="stat-body">
+            <div class="stat-label">Pending Supplier Pay</div>
+            <div class="stat-value">₹2,86,000</div>
+            <div class="stat-change negative">3 suppliers pending</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts + Tables Row -->
+      <div class="dashboard-grid">
+        <!-- Sales Chart -->
+        <div class="card chart-card">
+          <div class="card-header">
+            <h3 class="card-title">Sales Overview</h3>
+            <div class="card-actions">
+              <button class="btn-chip active" id="chart-week" onclick="toggleChart('week')">Week</button>
+              <button class="btn-chip" id="chart-month" onclick="toggleChart('month')">Month</button>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="salesChart" aria-label="Sales overview chart"></canvas>
+          </div>
+        </div>
+
+        <!-- Recent Sales -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Recent Sales</h3>
+            <button class="btn-link" onclick="navigate('sales')">View All →</button>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table compact">
+              <thead>
+                <tr>
+                  <th>Invoice</th>
+                  <th>Customer</th>
+                  <th>Amount</th>
+                  <th>Method</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><span class="mono">#INV-0142</span></td><td>Ravi Kumar</td><td>₹22,000</td><td><span class="badge badge-blue">UPI</span></td><td><span class="badge badge-green">Paid</span></td></tr>
+                <tr><td><span class="mono">#INV-0141</span></td><td>Priya Sharma</td><td>₹8,500</td><td><span class="badge badge-purple">Card</span></td><td><span class="badge badge-green">Paid</span></td></tr>
+                <tr><td><span class="mono">#INV-0140</span></td><td>Karthik M</td><td>₹15,000</td><td><span class="badge badge-gray">Cash</span></td><td><span class="badge badge-green">Paid</span></td></tr>
+                <tr><td><span class="mono">#INV-0139</span></td><td>Anitha Devi</td><td>₹2,750</td><td><span class="badge badge-orange">Credit</span></td><td><span class="badge badge-yellow">Pending</span></td></tr>
+                <tr><td><span class="mono">#INV-0138</span></td><td>Suresh P</td><td>₹12,000</td><td><span class="badge badge-blue">UPI</span></td><td><span class="badge badge-green">Paid</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid-2">
+        <!-- Low Stock -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">⚠️ Low Stock Alerts</h3>
+            <button class="btn-link" onclick="navigate('inventory')">View All →</button>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table compact">
+              <thead>
+                <tr><th>Product</th><th>Category</th><th>Qty</th><th>Min</th><th>Action</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Samsung 25W Charger</td><td>Charger</td>
+                  <td><span class="stock-critical">2</span></td><td>10</td>
+                  <td><button class="btn-sm btn-primary" onclick="showToast('Purchase order created','success')">Order</button></td>
+                </tr>
+                <tr>
+                  <td>Lightning Cable 2M</td><td>Cable</td>
+                  <td><span class="stock-critical">3</span></td><td>15</td>
+                  <td><button class="btn-sm btn-primary" onclick="showToast('Purchase order created','success')">Order</button></td>
+                </tr>
+                <tr>
+                  <td>boAt Rockerz 255</td><td>Earphone</td>
+                  <td><span class="stock-low">5</span></td><td>10</td>
+                  <td><button class="btn-sm btn-primary" onclick="showToast('Purchase order created','success')">Order</button></td>
+                </tr>
+                <tr>
+                  <td>Realme 65W Brick</td><td>Charger</td>
+                  <td><span class="stock-low">4</span></td><td>10</td>
+                  <td><button class="btn-sm btn-primary" onclick="showToast('Purchase order created','success')">Order</button></td>
+                </tr>
+                <tr>
+                  <td>Tempered Glass 6.7"</td><td>Protector</td>
+                  <td><span class="stock-low">7</span></td><td>20</td>
+                  <td><button class="btn-sm btn-primary" onclick="showToast('Purchase order created','success')">Order</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Recent Purchases -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Recent Purchases</h3>
+            <button class="btn-link" onclick="navigate('purchases')">View All →</button>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table compact">
+              <thead>
+                <tr><th>Invoice</th><th>Supplier</th><th>Items</th><th>Total</th><th>Status</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><span class="mono">PUR-0088</span></td><td>Reliance Digital</td><td>5</td><td>₹1,20,000</td><td><span class="badge badge-green">Paid</span></td></tr>
+                <tr><td><span class="mono">PUR-0087</span></td><td>Mobile World</td><td>12</td><td>₹45,600</td><td><span class="badge badge-yellow">Partial</span></td></tr>
+                <tr><td><span class="mono">PUR-0086</span></td><td>TechHub Dist.</td><td>8</td><td>₹32,000</td><td><span class="badge badge-red">Pending</span></td></tr>
+                <tr><td><span class="mono">PUR-0085</span></td><td>S.K. Traders</td><td>20</td><td>₹18,500</td><td><span class="badge badge-green">Paid</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== INVENTORY ===================== -->
+    <section id="page-inventory" class="page" aria-labelledby="inventory-heading">
+      <h2 id="inventory-heading" class="sr-only">Inventory Management</h2>
+
+      <!-- Inventory Tabs -->
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="inv-mobiles" onclick="switchTab('inv', 'mobiles')">📱 Mobile Phones</button>
+        <button class="tab-btn" data-tab="inv-accessories" onclick="switchTab('inv', 'accessories')">🎧 Accessories</button>
+        <button class="tab-btn" data-tab="inv-adjustment" onclick="switchTab('inv', 'adjustment')">🔄 Stock Adjustment</button>
+      </div>
+
+      <!-- Mobiles Tab -->
+      <div id="inv-mobiles" class="tab-content active">
+        <div class="card">
+          <div class="card-header">
+            <div class="filter-row">
+              <input type="search" class="search-input" placeholder="🔍 Search by Product, IMEI, Model..." id="mobile-search" aria-label="Search mobiles">
+              <select class="select-input" aria-label="Filter by brand" id="brand-filter">
+                <option value="">All Brands</option>
+                <option>Samsung</option>
+                <option>Apple</option>
+                <option>Realme</option>
+                <option>Redmi</option>
+                <option>OnePlus</option>
+                <option>Vivo</option>
+                <option>Oppo</option>
+              </select>
+              <select class="select-input" aria-label="Filter by status" id="status-filter">
+                <option value="">All Status</option>
+                <option>In Stock</option>
+                <option>Sold</option>
+                <option>Returned</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" onclick="openModal('add-mobile-modal')">+ Add Mobile</button>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table" id="mobiles-table">
+              <thead>
+                <tr>
+                  <th>Product</th><th>Brand</th><th>Model</th><th>IMEI 1</th><th>IMEI 2</th><th>RAM</th><th>Storage</th><th>Color</th>
+                  <th>Purchase ₹</th><th>Selling ₹</th><th>Supplier</th><th>Warranty</th><th>Status</th><th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="mobiles-tbody"></tbody>
+            </table>
+          </div>
+          <div class="table-footer">
+            <span class="table-info" id="mobiles-count">Showing 10 of 10 records</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accessories Tab -->
+      <div id="inv-accessories" class="tab-content">
+        <div class="card">
+          <div class="card-header">
+            <div class="filter-row">
+              <input type="search" class="search-input" placeholder="🔍 Search accessories..." aria-label="Search accessories">
+              <select class="select-input" aria-label="Filter by category">
+                <option value="">All Categories</option>
+                <option>Charger</option>
+                <option>USB Cable</option>
+                <option>Earphone</option>
+                <option>TWS</option>
+                <option>Power Bank</option>
+                <option>Phone Case</option>
+                <option>Screen Protector</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" onclick="showToast('Add Accessory form opening...','info')">+ Add Accessory</button>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table" id="accessories-table">
+              <thead>
+                <tr>
+                  <th>Product</th><th>Category</th><th>Brand</th><th>Qty</th><th>Purchase ₹</th><th>Selling ₹</th><th>Status</th><th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="accessories-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stock Adjustment Tab -->
+      <div id="inv-adjustment" class="tab-content">
+        <div class="adjustment-grid">
+          <div class="card adjustment-card">
+            <div class="adjustment-icon green">➕</div>
+            <h3>Add Stock</h3>
+            <p>Record newly received inventory items to increase stock count</p>
+            <button class="btn btn-success w-full" onclick="openModal('stock-adjust-modal')">Add Stock</button>
+          </div>
+          <div class="card adjustment-card">
+            <div class="adjustment-icon orange">➖</div>
+            <h3>Remove Stock</h3>
+            <p>Remove items from inventory due to returns or write-offs</p>
+            <button class="btn btn-warning w-full" onclick="openModal('stock-adjust-modal')">Remove Stock</button>
+          </div>
+          <div class="card adjustment-card">
+            <div class="adjustment-icon red">🔥</div>
+            <h3>Damaged Stock</h3>
+            <p>Mark items as damaged and remove from sellable inventory</p>
+            <button class="btn btn-danger w-full" onclick="openModal('stock-adjust-modal')">Mark Damaged</button>
+          </div>
+          <div class="card adjustment-card">
+            <div class="adjustment-icon blue">🔧</div>
+            <h3>Stock Correction</h3>
+            <p>Correct stock count after physical inventory verification</p>
+            <button class="btn btn-secondary w-full" onclick="openModal('stock-adjust-modal')">Correct Stock</button>
+          </div>
+        </div>
+        <div class="card mt-4">
+          <div class="card-header"><h3 class="card-title">Recent Adjustments</h3></div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr><th>Date</th><th>Product</th><th>Type</th><th>Qty Change</th><th>Reason</th><th>Done By</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>01 Oct 2026</td><td>Samsung 25W Charger</td><td><span class="badge badge-green">Added</span></td><td>+20</td><td>New Purchase</td><td>Admin</td></tr>
+                <tr><td>30 Sep 2026</td><td>Mi Power Bank 20000</td><td><span class="badge badge-red">Damaged</span></td><td>-2</td><td>Water damage</td><td>Admin</td></tr>
+                <tr><td>29 Sep 2026</td><td>iPhone 15 Case (Black)</td><td><span class="badge badge-blue">Corrected</span></td><td>-1</td><td>Physical count mismatch</td><td>Manager</td></tr>
+                <tr><td>28 Sep 2026</td><td>Boat Airdopes 141</td><td><span class="badge badge-orange">Removed</span></td><td>-1</td><td>Customer return</td><td>Admin</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PURCHASES ===================== -->
+    <section id="page-purchases" class="page" aria-labelledby="purchases-heading">
+      <h2 id="purchases-heading" class="sr-only">Purchase Management</h2>
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="pur-new" onclick="switchTab('pur', 'new')">➕ New Purchase</button>
+        <button class="tab-btn" data-tab="pur-history" onclick="switchTab('pur', 'history')">📋 Purchase History</button>
+      </div>
+
+      <!-- New Purchase -->
+      <div id="pur-new" class="tab-content active">
+        <div class="purchase-layout">
+          <div class="card purchase-form-card">
+            <div class="card-header"><h3 class="card-title">Purchase Entry</h3></div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="pur-supplier">Supplier *</label>
+                <select class="select-input" id="pur-supplier">
+                  <option>Select Supplier</option>
+                  <option>Reliance Digital</option>
+                  <option>Mobile World Dist.</option>
+                  <option>TechHub Distributors</option>
+                  <option>S.K. Traders</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pur-invoice">Invoice Number *</label>
+                <input type="text" class="form-input" id="pur-invoice" placeholder="SUP-INV-001" value="PUR-0089">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pur-date">Purchase Date *</label>
+                <input type="date" class="form-input" id="pur-date" value="2026-10-01">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pur-product">Product Type *</label>
+                <select class="select-input" id="pur-product" onchange="toggleIMEIFields()">
+                  <option value="">Select Product Type</option>
+                  <option value="mobile">Mobile Phone</option>
+                  <option value="accessory">Accessory</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pur-brand">Brand *</label>
+                <select class="select-input" id="pur-brand">
+                  <option>Select Brand</option>
+                  <option>Samsung</option>
+                  <option>Apple</option>
+                  <option>Realme</option>
+                  <option>Redmi</option>
+                  <option>OnePlus</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pur-model">Model *</label>
+                <input type="text" class="form-input" id="pur-model" placeholder="e.g. Galaxy S24 FE">
+              </div>
+              <div class="form-group" id="imei-field-1">
+                <label class="form-label" for="pur-imei1">IMEI 1 *</label>
+                <input type="text" class="form-input mono" id="pur-imei1" placeholder="15-digit IMEI" maxlength="15">
+              </div>
+              <div class="form-group" id="imei-field-2">
+                <label class="form-label" for="pur-imei2">IMEI 2</label>
+                <input type="text" class="form-input mono" id="pur-imei2" placeholder="IMEI 2 (optional)" maxlength="15">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pur-qty">Quantity *</label>
+                <input type="number" class="form-input" id="pur-qty" value="1" min="1" oninput="updatePurchaseSummary()">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pur-price">Purchase Price (₹) *</label>
+                <input type="number" class="form-input" id="pur-price" placeholder="0.00" oninput="updatePurchaseSummary()">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pur-gst">GST %</label>
+                <select class="select-input" id="pur-gst" onchange="updatePurchaseSummary()">
+                  <option value="0">0%</option>
+                  <option value="5">5%</option>
+                  <option value="12">12%</option>
+                  <option value="18" selected>18%</option>
+                  <option value="28">28%</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pur-discount">Discount (₹)</label>
+                <input type="number" class="form-input" id="pur-discount" placeholder="0.00" oninput="updatePurchaseSummary()">
+              </div>
+            </div>
+            <button class="btn btn-secondary" onclick="addPurchaseItem()">+ Add to List</button>
+
+            <!-- Purchase Items Table -->
+            <div class="purchase-items-table mt-4">
+              <table class="data-table compact" id="purchase-items-table">
+                <thead>
+                  <tr><th>Product</th><th>IMEI 1</th><th>Qty</th><th>Price</th><th>GST</th><th>Total</th><th></th></tr>
+                </thead>
+                <tbody id="purchase-items-tbody">
+                  <tr class="empty-row"><td colspan="7"><div class="empty-state small">No items added yet</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="form-actions mt-4">
+              <button class="btn btn-outline" onclick="showToast('Purchase cancelled','warning')">Cancel</button>
+              <button class="btn btn-secondary" onclick="showToast('Purchase saved & printing...','info')">Save &amp; Print</button>
+              <button class="btn btn-primary" onclick="savePurchase()">Save Purchase</button>
+            </div>
+          </div>
+
+          <!-- Summary Panel -->
+          <div class="purchase-summary-card">
+            <div class="card">
+              <div class="card-header"><h3 class="card-title">Purchase Summary</h3></div>
+              <div class="summary-items">
+                <div class="summary-row"><span>Subtotal</span><span id="sum-subtotal">₹0.00</span></div>
+                <div class="summary-row"><span>Discount</span><span id="sum-discount" class="text-red">- ₹0.00</span></div>
+                <div class="summary-row"><span>GST Amount</span><span id="sum-gst">+ ₹0.00</span></div>
+                <div class="summary-divider"></div>
+                <div class="summary-row total"><span>Total Amount</span><span id="sum-total">₹0.00</span></div>
+              </div>
+              <div class="payment-split mt-4">
+                <div class="form-group">
+                  <label class="form-label">Amount Paid</label>
+                  <input type="number" class="form-input" id="pur-paid" placeholder="0.00">
+                </div>
+                <div class="summary-row mt-2">
+                  <span>Pending</span>
+                  <span id="sum-pending" class="text-red">₹0.00</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card mt-4">
+              <div class="card-header"><h3 class="card-title">Invoice Preview</h3></div>
+              <div class="invoice-preview">
+                <div class="inv-shop">Star Sales</div>
+                <div class="inv-sub">Mobile Shop — GST: 33ABCDE1234F1Z5</div>
+                <div class="inv-divider"></div>
+                <div class="inv-row"><span>Invoice No</span><span id="inv-no">PUR-0089</span></div>
+                <div class="inv-row"><span>Date</span><span>01 Oct 2026</span></div>
+                <div class="inv-row"><span>Supplier</span><span id="inv-supplier">—</span></div>
+                <div class="inv-divider"></div>
+                <div class="inv-row total-row"><span>Grand Total</span><span id="inv-total">₹0.00</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Purchase History -->
+      <div id="pur-history" class="tab-content">
+        <div class="card">
+          <div class="card-header">
+            <div class="filter-row">
+              <input type="search" class="search-input" placeholder="🔍 Search purchase...">
+              <input type="date" class="form-input compact" value="2026-10-01">
+              <select class="select-input" aria-label="Filter by supplier">
+                <option>All Suppliers</option>
+                <option>Reliance Digital</option>
+                <option>Mobile World Dist.</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" onclick="switchTab('pur','new')">+ New Purchase</button>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr><th>Invoice No</th><th>Supplier</th><th>Date</th><th>Items</th><th>Total</th><th>Paid</th><th>Pending</th><th>Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="purchase-history-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SALES / BILLING ===================== -->
+    <section id="page-sales" class="page" aria-labelledby="sales-heading">
+      <h2 id="sales-heading" class="sr-only">Sales and Billing</h2>
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="sales-new" onclick="switchTab('sales', 'new')">🧾 New Bill</button>
+        <button class="tab-btn" data-tab="sales-history" onclick="switchTab('sales', 'history')">📋 Sales History</button>
+      </div>
+
+      <!-- New Bill POS -->
+      <div id="sales-new" class="tab-content active">
+        <div class="pos-layout">
+          <!-- Left: Product Search & Cart -->
+          <div class="pos-left">
+            <div class="card pos-search-card">
+              <div class="card-header"><h3 class="card-title">Product Search</h3></div>
+              <div class="pos-search-grid">
+                <input type="text" class="form-input" placeholder="Search by Product Name..." id="pos-search-name" oninput="posSearch()">
+                <input type="text" class="form-input" placeholder="Search by Model..." id="pos-search-model" oninput="posSearch()">
+                <input type="text" class="form-input mono" placeholder="Scan / Enter IMEI..." id="pos-search-imei" oninput="posSearch()">
+              </div>
+              <div id="pos-search-results" class="pos-results"></div>
+            </div>
+
+            <div class="card pos-cart-card">
+              <div class="card-header">
+                <h3 class="card-title">Billing Items</h3>
+                <button class="btn btn-outline btn-sm" onclick="clearCart()">🗑 Clear</button>
+              </div>
+              <div class="table-wrapper">
+                <table class="data-table compact">
+                  <thead>
+                    <tr><th>Product</th><th>IMEI</th><th>Qty</th><th>Price</th><th>Disc</th><th>GST</th><th>Total</th><th></th></tr>
+                  </thead>
+                  <tbody id="cart-tbody">
+                    <tr class="empty-row"><td colspan="8"><div class="empty-state small">No items in cart. Search and add products above.</div></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Customer Section -->
+            <div class="card">
+              <div class="card-header"><h3 class="card-title">Customer Details</h3></div>
+              <div class="form-grid cols-3">
+                <div class="form-group">
+                  <label class="form-label" for="cust-name">Customer Name</label>
+                  <input type="text" class="form-input" id="cust-name" placeholder="Walk-in Customer">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="cust-mobile">Mobile Number</label>
+                  <input type="tel" class="form-input" id="cust-mobile" placeholder="+91 XXXXX XXXXX">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="cust-address">Address</label>
+                  <input type="text" class="form-input" id="cust-address" placeholder="City, State">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Payment -->
+          <div class="pos-right">
+            <div class="card pos-payment-card">
+              <div class="card-header"><h3 class="card-title">Payment Summary</h3></div>
+              <div class="summary-items">
+                <div class="summary-row"><span>Subtotal</span><span id="pos-subtotal">₹0.00</span></div>
+                <div class="summary-row"><span>Discount</span><span id="pos-discount" class="text-red">- ₹0.00</span></div>
+                <div class="summary-row"><span>GST (18%)</span><span id="pos-gst">+ ₹0.00</span></div>
+                <div class="summary-divider"></div>
+                <div class="summary-row total grand"><span>Grand Total</span><span id="pos-grand">₹0.00</span></div>
+              </div>
+
+              <div class="payment-methods mt-3">
+                <div class="form-group"><label class="form-label">Payment Method</label></div>
+                <div class="method-buttons">
+                  <button class="method-btn active" id="m-cash" onclick="selectMethod('cash')">💵 Cash</button>
+                  <button class="method-btn" id="m-upi" onclick="selectMethod('upi')">📱 UPI</button>
+                  <button class="method-btn" id="m-card" onclick="selectMethod('card')">💳 Card</button>
+                  <button class="method-btn" id="m-credit" onclick="selectMethod('credit')">🕐 Credit</button>
+                </div>
+              </div>
+
+              <div class="payment-fields mt-3">
+                <div class="form-group">
+                  <label class="form-label" for="pos-paid">Amount Paid (₹)</label>
+                  <input type="number" class="form-input large" id="pos-paid" placeholder="0.00" oninput="calcBalance()">
+                </div>
+                <div class="summary-row balance-row">
+                  <span>Balance / Change</span>
+                  <span id="pos-balance" class="text-green">₹0.00</span>
+                </div>
+              </div>
+
+              <div class="pos-actions">
+                <button class="btn btn-outline" onclick="showToast('Bill held successfully','info')">⏸ Hold Bill</button>
+                <button class="btn btn-outline" onclick="clearCart()">🗑 Clear</button>
+                <button class="btn btn-success btn-large" onclick="saveBill()">💾 Save Bill</button>
+                <button class="btn btn-primary btn-large" onclick="printInvoice()">🖨 Print Invoice</button>
+              </div>
+            </div>
+
+            <div class="card mt-3">
+              <div class="card-header"><h3 class="card-title">Quick Add Demo</h3></div>
+              <div class="quick-products">
+                <button class="quick-btn" onclick="addQuickProduct('Samsung Galaxy A55 5G','864xxx','₹28,999',28999)">Samsung A55 5G</button>
+                <button class="quick-btn" onclick="addQuickProduct('Redmi 13 5G','867xxx','₹13,499',13499)">Redmi 13 5G</button>
+                <button class="quick-btn" onclick="addQuickProduct('OnePlus Nord CE4','869xxx','₹24,999',24999)">OnePlus Nord CE4</button>
+                <button class="quick-btn" onclick="addQuickProduct('Samsung 25W Charger','N/A','₹999',999)">Samsung Charger</button>
+                <button class="quick-btn" onclick="addQuickProduct('boAt Airdopes 141','N/A','₹1,299',1299)">Boat Airdopes 141</button>
+                <button class="quick-btn" onclick="addQuickProduct('USB-C Cable 1M','N/A','₹299',299)">USB-C Cable</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sales History -->
+      <div id="sales-history" class="tab-content">
+        <div class="card">
+          <div class="card-header">
+            <div class="filter-row">
+              <input type="search" class="search-input" placeholder="🔍 Search invoice, customer...">
+              <input type="date" class="form-input compact" value="2026-10-01">
+              <select class="select-input" aria-label="Filter by payment method">
+                <option>All Methods</option>
+                <option>Cash</option><option>UPI</option><option>Card</option><option>Credit</option>
+              </select>
+              <select class="select-input" aria-label="Filter by status">
+                <option>All Status</option>
+                <option>Paid</option><option>Pending</option><option>Partial</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" onclick="switchTab('sales','new')">+ New Bill</button>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr><th>Invoice No</th><th>Date</th><th>Customer</th><th>Items</th><th>Total</th><th>Method</th><th>Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="sales-history-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CUSTOMERS ===================== -->
+    <section id="page-customers" class="page" aria-labelledby="customers-heading">
+      <h2 id="customers-heading" class="sr-only">Customer Management</h2>
+      <div class="card">
+        <div class="card-header">
+          <div class="filter-row">
+            <input type="search" class="search-input" placeholder="🔍 Search by name, mobile...">
+          </div>
+          <button class="btn btn-primary" onclick="openModal('add-customer-modal')">+ Add Customer</button>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Customer Name</th><th>Mobile</th><th>Address</th><th>Total Purchases</th><th>Pending Amt</th><th>Last Purchase</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="customers-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SUPPLIERS ===================== -->
+    <section id="page-suppliers" class="page" aria-labelledby="suppliers-heading">
+      <h2 id="suppliers-heading" class="sr-only">Supplier Management</h2>
+      <div class="card">
+        <div class="card-header">
+          <div class="filter-row">
+            <input type="search" class="search-input" placeholder="🔍 Search supplier...">
+          </div>
+          <button class="btn btn-primary" onclick="openModal('add-supplier-modal')">+ Add Supplier</button>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Supplier Name</th><th>Contact</th><th>Company</th><th>Total Purchases</th><th>Paid</th><th>Pending</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="suppliers-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== EXPENSES ===================== -->
+    <section id="page-expenses" class="page" aria-labelledby="expenses-heading">
+      <h2 id="expenses-heading" class="sr-only">Expense Management</h2>
+      <div class="stats-grid cols-3">
+        <div class="stat-card accent-red">
+          <div class="stat-icon">📅</div>
+          <div class="stat-body">
+            <div class="stat-label">Today's Expenses</div>
+            <div class="stat-value">₹1,200</div>
+          </div>
+        </div>
+        <div class="stat-card accent-orange">
+          <div class="stat-icon">📆</div>
+          <div class="stat-body">
+            <div class="stat-label">This Month's Expenses</div>
+            <div class="stat-value">₹42,500</div>
+          </div>
+        </div>
+        <div class="stat-card accent-purple">
+          <div class="stat-icon">💸</div>
+          <div class="stat-body">
+            <div class="stat-label">Total Expenses (YTD)</div>
+            <div class="stat-value">₹3,84,000</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt-4">
+        <div class="card-header">
+          <div class="filter-row">
+            <select class="select-input" aria-label="Filter by category">
+              <option>All Categories</option>
+              <option>Rent</option><option>Electricity</option><option>Salary</option>
+              <option>Transport</option><option>Maintenance</option><option>Other</option>
+            </select>
+            <input type="date" class="form-input compact" value="2026-10-01">
+          </div>
+          <button class="btn btn-primary" onclick="openModal('add-expense-modal')">+ Add Expense</button>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Date</th><th>Category</th><th>Description</th><th>Amount</th><th>Payment Method</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="expenses-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== REPORTS ===================== -->
+    <section id="page-reports" class="page" aria-labelledby="reports-heading">
+      <h2 id="reports-heading" class="sr-only">Reports</h2>
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="rep-sales" onclick="switchTab('rep','sales')">📊 Sales</button>
+        <button class="tab-btn" data-tab="rep-purchase" onclick="switchTab('rep','purchase')">🛒 Purchases</button>
+        <button class="tab-btn" data-tab="rep-stock" onclick="switchTab('rep','stock')">📦 Stock</button>
+        <button class="tab-btn" data-tab="rep-profit" onclick="switchTab('rep','profit')">💰 Profit</button>
+        <button class="tab-btn" data-tab="rep-payment" onclick="switchTab('rep','payment')">💳 Payments</button>
+      </div>
+
+      <!-- Sales Report -->
+      <div id="rep-sales" class="tab-content active">
+        <div class="card report-controls">
+          <div class="filter-row">
+            <div class="btn-group">
+              <button class="btn-chip active" onclick="setReportPeriod('daily',this)">Daily</button>
+              <button class="btn-chip" onclick="setReportPeriod('weekly',this)">Weekly</button>
+              <button class="btn-chip" onclick="setReportPeriod('monthly',this)">Monthly</button>
+            </div>
+            <input type="date" class="form-input compact" value="2026-09-25">
+            <input type="date" class="form-input compact" value="2026-10-01">
+            <button class="btn btn-primary" onclick="showToast('Report generated','success')">Generate Report</button>
+            <button class="btn btn-outline" onclick="showToast('Exporting to PDF...','info')">Export PDF</button>
+          </div>
+        </div>
+        <div class="report-stats">
+          <div class="stat-card accent-green"><div class="stat-icon">💰</div><div class="stat-body"><div class="stat-label">Total Sales</div><div class="stat-value">₹3,24,850</div></div></div>
+          <div class="stat-card accent-blue"><div class="stat-icon">📝</div><div class="stat-body"><div class="stat-label">Total Invoices</div><div class="stat-value">48</div></div></div>
+          <div class="stat-card accent-purple"><div class="stat-icon">📱</div><div class="stat-body"><div class="stat-label">Mobiles Sold</div><div class="stat-value">32</div></div></div>
+          <div class="stat-card accent-teal"><div class="stat-icon">🎧</div><div class="stat-body"><div class="stat-label">Accessories Sold</div><div class="stat-value">156</div></div></div>
+        </div>
+        <div class="dashboard-grid">
+          <div class="card chart-card"><div class="card-header"><h3 class="card-title">Sales Trend</h3></div><div class="chart-container"><canvas id="reportSalesChart"></canvas></div></div>
+          <div class="card chart-card"><div class="card-header"><h3 class="card-title">Top Selling Products</h3></div><div class="chart-container"><canvas id="topProductsChart"></canvas></div></div>
+        </div>
+      </div>
+
+      <!-- Purchase Report -->
+      <div id="rep-purchase" class="tab-content">
+        <div class="report-stats">
+          <div class="stat-card accent-blue"><div class="stat-icon">🛒</div><div class="stat-body"><div class="stat-label">Total Purchased</div><div class="stat-value">₹2,18,500</div></div></div>
+          <div class="stat-card accent-orange"><div class="stat-icon">🏭</div><div class="stat-body"><div class="stat-label">Total Suppliers</div><div class="stat-value">4</div></div></div>
+          <div class="stat-card accent-green"><div class="stat-icon">✅</div><div class="stat-body"><div class="stat-label">Paid</div><div class="stat-value">₹1,85,000</div></div></div>
+          <div class="stat-card accent-red"><div class="stat-icon">⏳</div><div class="stat-body"><div class="stat-label">Pending</div><div class="stat-value">₹33,500</div></div></div>
+        </div>
+        <div class="card mt-4 chart-card">
+          <div class="card-header"><h3 class="card-title">Purchase History (Last 30 Days)</h3></div>
+          <div class="chart-container"><canvas id="purchaseReportChart"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Stock Report -->
+      <div id="rep-stock" class="tab-content">
+        <div class="report-stats">
+          <div class="stat-card accent-blue"><div class="stat-icon">📦</div><div class="stat-body"><div class="stat-label">Total Items</div><div class="stat-value">1,284</div></div></div>
+          <div class="stat-card accent-red"><div class="stat-icon">⚠️</div><div class="stat-body"><div class="stat-label">Low Stock</div><div class="stat-value">23</div></div></div>
+          <div class="stat-card accent-green"><div class="stat-icon">✅</div><div class="stat-body"><div class="stat-label">In Stock</div><div class="stat-value">1,024</div></div></div>
+          <div class="stat-card accent-purple"><div class="stat-icon">💎</div><div class="stat-body"><div class="stat-label">Stock Value</div><div class="stat-value">₹18.4L</div></div></div>
+        </div>
+        <div class="dashboard-grid">
+          <div class="card chart-card"><div class="card-header"><h3 class="card-title">Stock by Category</h3></div><div class="chart-container"><canvas id="stockCategoryChart"></canvas></div></div>
+          <div class="card chart-card"><div class="card-header"><h3 class="card-title">Brand-wise Stock</h3></div><div class="chart-container"><canvas id="brandStockChart"></canvas></div></div>
+        </div>
+      </div>
+
+      <!-- Profit Report -->
+      <div id="rep-profit" class="tab-content">
+        <div class="report-stats">
+          <div class="stat-card accent-green"><div class="stat-icon">💰</div><div class="stat-body"><div class="stat-label">Total Sales</div><div class="stat-value">₹3,24,850</div></div></div>
+          <div class="stat-card accent-red"><div class="stat-icon">🛒</div><div class="stat-body"><div class="stat-label">Purchase Cost</div><div class="stat-value">₹2,18,500</div></div></div>
+          <div class="stat-card accent-orange"><div class="stat-icon">💸</div><div class="stat-body"><div class="stat-label">Expenses</div><div class="stat-value">₹42,500</div></div></div>
+          <div class="stat-card accent-purple"><div class="stat-icon">📈</div><div class="stat-body"><div class="stat-label">Net Profit</div><div class="stat-value">₹63,850</div></div></div>
+        </div>
+        <div class="card mt-4 chart-card"><div class="card-header"><h3 class="card-title">Profit Analysis (Monthly)</h3></div><div class="chart-container"><canvas id="profitChart"></canvas></div></div>
+      </div>
+
+      <!-- Payment Report -->
+      <div id="rep-payment" class="tab-content">
+        <div class="report-stats">
+          <div class="stat-card accent-green"><div class="stat-icon">💵</div><div class="stat-body"><div class="stat-label">Cash</div><div class="stat-value">₹1,24,500</div></div></div>
+          <div class="stat-card accent-blue"><div class="stat-icon">📱</div><div class="stat-body"><div class="stat-label">UPI</div><div class="stat-value">₹98,200</div></div></div>
+          <div class="stat-card accent-purple"><div class="stat-icon">💳</div><div class="stat-body"><div class="stat-label">Card</div><div class="stat-value">₹62,150</div></div></div>
+          <div class="stat-card accent-orange"><div class="stat-icon">🕐</div><div class="stat-body"><div class="stat-label">Credit (Pending)</div><div class="stat-value">₹40,000</div></div></div>
+        </div>
+        <div class="card mt-4 chart-card"><div class="card-header"><h3 class="card-title">Payment Method Distribution</h3></div><div class="chart-container"><canvas id="paymentChart"></canvas></div></div>
+      </div>
+    </section>
+
+    <!-- ===================== SETTINGS ===================== -->
+    <section id="page-settings" class="page" aria-labelledby="settings-heading">
+      <h2 id="settings-heading" class="sr-only">Settings</h2>
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="set-shop" onclick="switchTab('set','shop')">🏪 Shop Details</button>
+        <button class="tab-btn" data-tab="set-invoice" onclick="switchTab('set','invoice')">🧾 Invoice Settings</button>
+        <button class="tab-btn" data-tab="set-appearance" onclick="switchTab('set','appearance')">🎨 Appearance</button>
+        <button class="tab-btn" data-tab="set-backup" onclick="switchTab('set','backup')">💾 Backup &amp; Restore</button>
+      </div>
+
+
+      <div id="set-shop" class="tab-content active">
+        <div class="card settings-card">
+          <div class="card-header"><h3 class="card-title">Shop Information</h3></div>
+          <div class="form-grid">
+            <div class="form-group span-2">
+              <label class="form-label" for="shop-name">Shop Name *</label>
+              <input type="text" class="form-input" id="shop-name" value="Star Sales">
+            </div>
+            <div class="form-group span-2">
+              <label class="form-label" for="shop-address">Address *</label>
+              <textarea class="form-input" id="shop-address" rows="2">123, Main Street, Gandhi Nagar, Chennai - 600020, Tamil Nadu</textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="shop-phone">Phone Number *</label>
+              <input type="tel" class="form-input" id="shop-phone" value="+91 98765 43210">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="shop-email">Email</label>
+              <input type="email" class="form-input" id="shop-email" value="starsales@gmail.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="shop-gst">GST Number</label>
+              <input type="text" class="form-input mono" id="shop-gst" value="33ABCDE1234F1Z5">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="shop-pan">PAN Number</label>
+              <input type="text" class="form-input mono" id="shop-pan" value="ABCDE1234F">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-primary" onclick="showToast('Shop details saved successfully!','success')">Save Changes</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="set-invoice" class="tab-content">
+        <div class="card settings-card">
+          <div class="card-header"><h3 class="card-title">Invoice Configuration</h3></div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="inv-prefix">Invoice Prefix</label>
+              <input type="text" class="form-input" id="inv-prefix" value="INV-">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="inv-start">Starting Number</label>
+              <input type="number" class="form-input" id="inv-start" value="143">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="inv-gst-rate">Default GST Rate</label>
+              <select class="select-input" id="inv-gst-rate">
+                <option>0%</option><option>5%</option><option>12%</option><option selected>18%</option><option>28%</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="inv-copies">Print Copies</label>
+              <select class="select-input" id="inv-copies">
+                <option>1 Copy</option><option selected>2 Copies</option><option>3 Copies</option>
+              </select>
+            </div>
+            <div class="form-group span-2">
+              <label class="form-label" for="inv-terms">Terms &amp; Conditions</label>
+              <textarea class="form-input" id="inv-terms" rows="3">1. All sales are final. No returns after 7 days.
+2. Warranty claims as per manufacturer policy.
+3. Goods once sold will not be taken back.</textarea>
+            </div>
+            <div class="form-group span-2">
+              <label class="form-label" for="inv-footer">Invoice Footer Message</label>
+              <input type="text" class="form-input" id="inv-footer" value="Thank you for shopping with Star Sales! Visit again.">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-primary" onclick="showToast('Invoice settings saved!','success')">Save Settings</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="set-appearance" class="tab-content">
+        <div class="card settings-card">
+          <div class="card-header">
+            <h3 class="card-title">🎨 Appearance &amp; Theme</h3>
+          </div>
+          <div style="padding: var(--space-lg);">
+            <p style="color:var(--text-secondary); margin-bottom: var(--space-lg); font-size:13px;">
+              Choose how MobileSync Pro looks on this device. Your preference is saved automatically.
+            </p>
+            <div class="theme-option-grid" id="theme-cards">
+              <!-- Dark Card -->
+              <div class="theme-option-card active" id="theme-card-dark" onclick="selectThemeCard('dark')">
+                <div class="theme-preview dark-preview">
+                  <div class="tp-sidebar"></div>
+                  <div class="tp-body">
+                    <div class="tp-topbar"></div>
+                    <div class="tp-cards">
+                      <div class="tp-card"></div>
+                      <div class="tp-card"></div>
+                      <div class="tp-card"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="theme-option-info">
+                  <span class="theme-option-icon">🌙</span>
+                  <div>
+                    <div class="theme-option-name">Dark Mode</div>
+                    <div class="theme-option-desc">Easy on the eyes at night</div>
+                  </div>
+                  <span class="theme-option-check" id="check-dark">✓</span>
+                </div>
+              </div>
+
+              <!-- Light Card -->
+              <div class="theme-option-card" id="theme-card-light" onclick="selectThemeCard('light')">
+                <div class="theme-preview light-preview">
+                  <div class="tp-sidebar"></div>
+                  <div class="tp-body">
+                    <div class="tp-topbar"></div>
+                    <div class="tp-cards">
+                      <div class="tp-card"></div>
+                      <div class="tp-card"></div>
+                      <div class="tp-card"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="theme-option-info">
+                  <span class="theme-option-icon">☀️</span>
+                  <div>
+                    <div class="theme-option-name">Light Mode</div>
+                    <div class="theme-option-desc">Clean and bright interface</div>
+                  </div>
+                  <span class="theme-option-check" id="check-light" style="opacity:0">✓</span>
+                </div>
+              </div>
+
+              <!-- System Card -->
+              <div class="theme-option-card" id="theme-card-system" onclick="selectThemeCard('system')">
+                <div class="theme-preview system-preview">
+                  <div class="tp-half dark-preview" style="width:50%;height:100%;display:inline-block;border-radius:var(--radius-sm) 0 0 var(--radius-sm);">
+                    <div class="tp-sidebar" style="width:14px;"></div>
+                  </div><div class="tp-half light-preview" style="width:50%;height:100%;display:inline-block;vertical-align:top;border-radius:0 var(--radius-sm) var(--radius-sm) 0;">
+                    <div style="height:6px;background:#e8ecf0;margin:4px 4px 2px 0;border-radius:2px;"></div>
+                  </div>
+                </div>
+                <div class="theme-option-info">
+                  <span class="theme-option-icon">💻</span>
+                  <div>
+                    <div class="theme-option-name">System Default</div>
+                    <div class="theme-option-desc">Follows your OS setting</div>
+                  </div>
+                  <span class="theme-option-check" id="check-system" style="opacity:0">✓</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="set-backup" class="tab-content">
+        <div class="backup-grid">
+          <div class="card backup-card">
+            <div class="backup-icon">💾</div>
+            <h3>Backup Database</h3>
+            <p>Create a complete backup of all your shop data including inventory, sales, purchases and settings.</p>
+            <div class="backup-info"><span class="info-label">Last Backup:</span><span class="info-value">01 Oct 2026, 10:30 AM</span></div>
+            <div class="backup-info"><span class="info-label">Location:</span><span class="info-value mono">C:\StarSales\Backup\</span></div>
+            <button class="btn btn-primary w-full" onclick="simulateBackup()">📁 Create Backup Now</button>
+          </div>
+          <div class="card backup-card">
+            <div class="backup-icon">📂</div>
+            <h3>Restore Backup</h3>
+            <p>Restore your data from a previous backup file. This will overwrite current data.</p>
+            <div class="backup-warning">⚠️ Warning: Restoring will replace all current data. Backup first!</div>
+            <button class="btn btn-warning w-full mt-2" onclick="showToast('File browser opened','info')">📂 Select Backup File</button>
+            <button class="btn btn-danger w-full mt-2" onclick="openModal('confirm-restore-modal')">🔄 Restore Selected File</button>
+          </div>
+          <div class="card backup-card">
+            <div class="backup-icon">⚙️</div>
+            <h3>Auto Backup Settings</h3>
+            <p>Configure automatic backup schedule to keep your data safe.</p>
+            <div class="form-group">
+              <label class="form-label">Backup Frequency</label>
+              <select class="select-input"><option>Daily (Recommended)</option><option>Weekly</option><option>On Every Close</option><option>Manual Only</option></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Backup Location</label>
+              <div class="input-with-btn">
+                <input type="text" class="form-input" value="C:\StarSales\Backup\" readonly>
+                <button class="btn btn-outline btn-sm" onclick="showToast('Browse folder dialog opened','info')">Browse</button>
+              </div>
+            </div>
+            <button class="btn btn-secondary w-full" onclick="showToast('Auto backup settings saved!','success')">Save Settings</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- end .page-content -->
+</main>
+
+<!-- ===================== MODALS ===================== -->
+
+<!-- Add Mobile Modal -->
+<dialog id="add-mobile-modal" class="modal-dialog" aria-labelledby="add-mobile-title">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="add-mobile-title" class="modal-title">Add New Mobile</h2>
+      <button class="modal-close" onclick="closeModal('add-mobile-modal')" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label" for="m-brand">Brand *</label>
+          <select class="select-input" id="m-brand"><option>Samsung</option><option>Apple</option><option>Realme</option><option>Redmi</option><option>OnePlus</option><option>Vivo</option></select></div>
+        <div class="form-group"><label class="form-label" for="m-model">Model *</label>
+          <input type="text" class="form-input" id="m-model" placeholder="e.g. Galaxy S24 FE"></div>
+        <div class="form-group"><label class="form-label" for="m-imei1">IMEI 1 *</label>
+          <input type="text" class="form-input mono" id="m-imei1" placeholder="15-digit IMEI"></div>
+        <div class="form-group"><label class="form-label" for="m-imei2">IMEI 2</label>
+          <input type="text" class="form-input mono" id="m-imei2" placeholder="Optional"></div>
+        <div class="form-group"><label class="form-label" for="m-ram">RAM</label>
+          <select class="select-input" id="m-ram"><option>4GB</option><option>6GB</option><option>8GB</option><option>12GB</option><option>16GB</option></select></div>
+        <div class="form-group"><label class="form-label" for="m-storage">Storage</label>
+          <select class="select-input" id="m-storage"><option>64GB</option><option>128GB</option><option>256GB</option><option>512GB</option><option>1TB</option></select></div>
+        <div class="form-group"><label class="form-label" for="m-color">Color</label>
+          <input type="text" class="form-input" id="m-color" placeholder="e.g. Graphite Black"></div>
+        <div class="form-group"><label class="form-label" for="m-purchase-price">Purchase Price (₹) *</label>
+          <input type="number" class="form-input" id="m-purchase-price" placeholder="0.00"></div>
+        <div class="form-group"><label class="form-label" for="m-selling-price">Selling Price (₹) *</label>
+          <input type="number" class="form-input" id="m-selling-price" placeholder="0.00"></div>
+        <div class="form-group"><label class="form-label" for="m-supplier">Supplier</label>
+          <select class="select-input" id="m-supplier"><option>Reliance Digital</option><option>Mobile World</option><option>TechHub Dist.</option></select></div>
+        <div class="form-group"><label class="form-label" for="m-warranty">Warranty</label>
+          <select class="select-input" id="m-warranty"><option>6 Months</option><option>1 Year</option><option>2 Years</option></select></div>
+        <div class="form-group"><label class="form-label" for="m-status">Status</label>
+          <select class="select-input" id="m-status"><option>In Stock</option><option>Sold</option><option>Returned</option></select></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('add-mobile-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveMobile()">Add Mobile</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- Stock Adjustment Modal -->
+<dialog id="stock-adjust-modal" class="modal-dialog" aria-labelledby="stock-adjust-title">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="stock-adjust-title" class="modal-title">Stock Adjustment</h2>
+      <button class="modal-close" onclick="closeModal('stock-adjust-modal')" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group span-2"><label class="form-label">Product *</label>
+          <input type="text" class="form-input" placeholder="Search product..." id="adj-product"></div>
+        <div class="form-group"><label class="form-label">Adjustment Type</label>
+          <select class="select-input" id="adj-type"><option>Add Stock</option><option>Remove Stock</option><option>Damaged</option><option>Correction</option></select></div>
+        <div class="form-group"><label class="form-label">Quantity</label>
+          <input type="number" class="form-input" id="adj-qty" value="1"></div>
+        <div class="form-group span-2"><label class="form-label">Reason</label>
+          <input type="text" class="form-input" id="adj-reason" placeholder="Reason for adjustment"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('stock-adjust-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveAdjustment()">Save Adjustment</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- Add Customer Modal -->
+<dialog id="add-customer-modal" class="modal-dialog" aria-labelledby="add-customer-title">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="add-customer-title" class="modal-title">Add New Customer</h2>
+      <button class="modal-close" onclick="closeModal('add-customer-modal')" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label" for="nc-name">Full Name *</label><input type="text" class="form-input" id="nc-name" placeholder="Customer Full Name"></div>
+        <div class="form-group"><label class="form-label" for="nc-mobile">Mobile Number *</label><input type="tel" class="form-input" id="nc-mobile" placeholder="+91 XXXXX XXXXX"></div>
+        <div class="form-group span-2"><label class="form-label" for="nc-address">Address</label><textarea class="form-input" id="nc-address" placeholder="Full address" rows="2"></textarea></div>
+        <div class="form-group"><label class="form-label" for="nc-email">Email</label><input type="email" class="form-input" id="nc-email" placeholder="customer@email.com"></div>
+        <div class="form-group"><label class="form-label" for="nc-notes">Notes</label><input type="text" class="form-input" id="nc-notes" placeholder="Any additional notes"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('add-customer-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveCustomer()">Add Customer</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- Add Supplier Modal -->
+<dialog id="add-supplier-modal" class="modal-dialog" aria-labelledby="add-supplier-title">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="add-supplier-title" class="modal-title">Add New Supplier</h2>
+      <button class="modal-close" onclick="closeModal('add-supplier-modal')" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label" for="ns-name">Supplier Name *</label><input type="text" class="form-input" id="ns-name" placeholder="Contact person name"></div>
+        <div class="form-group"><label class="form-label" for="ns-company">Company *</label><input type="text" class="form-input" id="ns-company" placeholder="Company name"></div>
+        <div class="form-group"><label class="form-label" for="ns-mobile">Contact Number *</label><input type="tel" class="form-input" id="ns-mobile" placeholder="+91 XXXXX XXXXX"></div>
+        <div class="form-group"><label class="form-label" for="ns-email">Email</label><input type="email" class="form-input" id="ns-email" placeholder="supplier@company.com"></div>
+        <div class="form-group"><label class="form-label" for="ns-gst">GST Number</label><input type="text" class="form-input mono" id="ns-gst" placeholder="GST Number"></div>
+        <div class="form-group"><label class="form-label" for="ns-city">City</label><input type="text" class="form-input" id="ns-city" placeholder="City"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('add-supplier-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveSupplier()">Add Supplier</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- Add Expense Modal -->
+<dialog id="add-expense-modal" class="modal-dialog" aria-labelledby="add-expense-title">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="add-expense-title" class="modal-title">Add Expense</h2>
+      <button class="modal-close" onclick="closeModal('add-expense-modal')" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label" for="exp-date">Date *</label><input type="date" class="form-input" id="exp-date" value="2026-10-01"></div>
+        <div class="form-group"><label class="form-label" for="exp-cat">Category *</label>
+          <select class="select-input" id="exp-cat"><option>Rent</option><option>Electricity</option><option>Salary</option><option>Transport</option><option>Maintenance</option><option>Other</option></select></div>
+        <div class="form-group span-2"><label class="form-label" for="exp-desc">Description *</label><input type="text" class="form-input" id="exp-desc" placeholder="Expense description"></div>
+        <div class="form-group"><label class="form-label" for="exp-amount">Amount (₹) *</label><input type="number" class="form-input" id="exp-amount" placeholder="0.00"></div>
+        <div class="form-group"><label class="form-label" for="exp-method">Payment Method</label>
+          <select class="select-input" id="exp-method"><option>Cash</option><option>UPI</option><option>Bank Transfer</option><option>Card</option></select></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('add-expense-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveExpense()">Save Expense</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- Confirm Restore Modal -->
+<dialog id="confirm-restore-modal" class="modal-dialog modal-sm" aria-labelledby="confirm-restore-title">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="confirm-restore-title" class="modal-title">⚠️ Confirm Restore</h2>
+      <button class="modal-close" onclick="closeModal('confirm-restore-modal')" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>Are you sure you want to restore from backup? This will <strong>permanently replace</strong> all your current data. This action cannot be undone.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('confirm-restore-modal')">Cancel</button>
+      <button class="btn btn-danger" onclick="closeModal('confirm-restore-modal'); showToast('Restore simulation complete. Data reloaded.','success')">Yes, Restore</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- View Bill Modal -->
+<dialog id="view-bill-modal" class="modal-dialog modal-lg" aria-labelledby="view-bill-title">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="view-bill-title" class="modal-title">Invoice Details</h2>
+      <button class="modal-close" onclick="closeModal('view-bill-modal')" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="view-bill-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('view-bill-modal')">Close</button>
+      <button class="btn btn-primary" onclick="showToast('Invoice sent to printer','info')">🖨 Print</button>
+    </div>
+  </div>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>
