@@ -1,14 +1,42 @@
-﻿# 📱 MobileSync Pro — Mobile Shop Management System
+# 📱 MobileSync Pro — Mobile Shop Management System
 
-A modern, professional **offline desktop application UI** for a Mobile Shop Management System.  
-Built with pure **HTML, CSS & JavaScript** — no frameworks, no backend, no database.
+A modern, professional **offline desktop application** for a Mobile Shop Management System.  
+Built with **Electron, HTML5, CSS3 & JavaScript** — packaged as a standalone Windows desktop app with 100% offline support.
 
-## 🚀 Live Demo
-> Open index.html directly in your browser or serve with any static server.
+---
 
-`ash
+## 🖥️ Run as Desktop App
+
+### Option 1: Direct Executable (Ready Now)
+Double click to run the pre-built Windows desktop executable:
+```
+dist/win-unpacked/MobileSync Pro.exe
+```
+Or simply double-click `launch.bat`.
+
+### Option 2: Run via NPM (Development Mode)
+```bash
+npm start
+```
+
+### Option 3: Build an Installer / Standalone Executable
+```bash
+# Package into dist/ folder
+npm run pack
+
+# Create installer (.exe) and portable package
+npm run dist
+```
+
+---
+
+## 🌐 Run as Web App (Optional)
+You can still open `index.html` in any browser or run:
+```bash
 npx http-server . -p 3000 -o
-`
+```
+
+---
 
 ## ✨ Features
 
@@ -43,7 +71,7 @@ npx http-server . -p 3000 -o
 
 ### 📊 Reports & Analytics
 - Sales, Purchase, Stock, Profit & Payment reports
-- 7 interactive Chart.js charts
+- 7 interactive charts (now bundled offline with local `chart.umd.min.js`)
 
 ### ⚙️ Settings
 - Shop details & GST configuration
@@ -51,29 +79,37 @@ npx http-server . -p 3000 -o
 - 🎨 Light / Dark mode (with System preference detection)
 - Backup & Restore UI
 
-## 🎨 Design
-- Dark & Light theme with smooth transitions
-- Animated sidebar navigation
-- Toast notifications
-- Native <dialog> modals
-- Fully responsive desktop layout
+---
 
 ## 🛠️ Tech Stack
 | Layer | Technology |
 |---|---|
+| Desktop Runtime | Electron 44 |
+| Packaging | electron-builder |
 | Structure | HTML5 (Semantic) |
 | Styling | Vanilla CSS (Custom Properties) |
 | Logic | Vanilla JavaScript (ES6+) |
-| Charts | Chart.js 4.4 |
-| Fonts | Inter + JetBrains Mono (Google Fonts) |
+| Charts | Chart.js 4.4 (Offline bundled) |
+| Typography | Inter + JetBrains Mono |
+
+---
 
 ## 📁 Project Structure
-`
+```
 mobile-shop/
-├── index.html    # Full app structure & all 9 modules
-├── styles.css    # Complete design system & theme tokens
-└── app.js        # Mock data, navigation, charts & interactions
-`
+├── main.js                  # Electron desktop main process
+├── index.html               # Full app structure & all 9 modules
+├── styles.css               # Complete design system & theme tokens
+├── app.js                   # Application state, navigation & UI logic
+├── chart.umd.min.js         # Offline Chart.js library
+├── launch.bat               # Windows double-click launcher
+├── package.json             # App metadata & Electron build config
+└── dist/
+    └── win-unpacked/
+        └── MobileSync Pro.exe  # Standalone Windows executable
+```
+
+---
 
 ## 📋 Modules
 1. Dashboard
@@ -89,6 +125,8 @@ mobile-shop/
 > ⚠️ This is a **demo/prototype UI** for client presentation.  
 > No real database, backend, API, or payment integration is included.  
 > All data is mock/dummy data for demonstration purposes.
+
+---
 
 ## 📄 License
 MIT — Free to use and modify.

@@ -1,0 +1,53 @@
+{
+  "name": "mobilesync-pro",
+  "version": "1.0.0",
+  "description": "MobileSync Pro — Desktop Application for Mobile Shop Management",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LOGANANTH234/mobile-shop-management.git"
+  },
+  "keywords": [
+    "mobile-shop",
+    "desktop-app",
+    "electron",
+    "inventory-management",
+    "billing-system"
+  ],
+  "author": "LOGANANTH234",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LOGANANTH234/mobile-shop-management/issues"
+  },
+  "homepage": "https://github.com/LOGANANTH234/mobile-shop-management#readme",
+  "devDependencies": {
+    "electron": "^44.7.0",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.mobilesync.app",
+    "productName": "MobileSync Pro",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        "portable",
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "files": [
+      "**/*",
+      "!dist/**"
+    ]
+  }
+}
